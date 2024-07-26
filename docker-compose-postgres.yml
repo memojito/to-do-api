@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: to-do-api-postgres
+    environment:
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo
+      POSTGRES_DB: todo
+    ports:
+      - "5432:5432"
+    volumes:
+      - database_data:/var/lib/postgresql/data
+      - ./data/init-scripts/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    restart: unless-stopped
+
+volumes:
+  database_data:
+    driver: local
