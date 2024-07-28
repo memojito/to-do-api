@@ -17,7 +17,6 @@ return [
 //                $config = $container->get('config');
 //                return new Adapter($config['db']);
 //            },
-            App\Handler\GetTodoHandler::class => App\Handler\GetHandlerFactory::class,
         ],
     ],
 ];

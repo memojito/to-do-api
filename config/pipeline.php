@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Laminas\Stratigility\Middleware\ErrorHandler;
 use Mezzio\Application;
+use Mezzio\Authentication\AuthenticationMiddleware;
 use Mezzio\Handler\NotFoundHandler;
 use Mezzio\Helper\ServerUrlMiddleware;
 use Mezzio\Helper\UrlHelperMiddleware;
@@ -19,7 +20,11 @@ use Psr\Container\ContainerInterface;
  * Setup middleware pipeline:
  */
 
-return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container): void {
+return function (
+    Application $app,
+    MiddlewareFactory $factory,
+    ContainerInterface $container
+): void {
     // The error handler should be the first (most outer) middleware to catch
     // all Exceptions.
     $app->pipe(ErrorHandler::class);
@@ -66,7 +71,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - route-based authentication
     // - route-based validation
     // - etc.
-    $app->pipe(Mezzio\Authentication\AuthenticationMiddleware::class);
+    $app->pipe(AuthenticationMiddleware::class);
 
     // Register the dispatch middleware in the middleware pipeline
     $app->pipe(DispatchMiddleware::class);

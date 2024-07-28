@@ -2,7 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Handler\CreateTodoHandler;
+use App\Handler\DeleteTodoHandler;
+use App\Handler\GetTodoHandler;
+use App\Handler\HomePageHandler;
+use App\Handler\PingHandler;
 use Mezzio\Application;
+use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\MiddlewareFactory;
 use Psr\Container\ContainerInterface;
 
@@ -42,7 +48,15 @@ return static function (
     MiddlewareFactory $factory,
     ContainerInterface $container
 ): void {
-    $app->get('/', App\Handler\HomePageHandler::class, 'home');
-    $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
-    $app->get('/todos', App\Handler\GetTodoHandler::class, 'todos.get');
+    $app->get('/api/v1', HomePageHandler::class, 'home');
+    $app->get('/api/ping', PingHandler::class, 'api.ping');
+    $app->get('/api/v1/todos', GetTodoHandler::class, 'todos.get');
+    $app->post(
+        '/api/v1/todos',
+        [BodyParamsMiddleware::class, CreateTodoHandler::class],
+        'todos.post'
+    );
+    $app->delete('/api/v1/todos/{todoId}', DeleteTodoHandler::class,
+        'todos.delete');
+    $app->put('/api/v1/todos/{todoId}', PutTodoHandler::class, 'todos.put');
 };

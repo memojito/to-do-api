@@ -12,7 +12,7 @@ return [
     'dependencies' => [
         // Use 'aliases' to alias a service name to another service. The
         // key is the alias name, the value is the service to which it points.
-        'aliases' => [
+        'aliases'    => [
             // Fully\Qualified\ClassOrInterfaceName::class => Fully\Qualified\ClassName::class,
         ],
         // Use 'invokables' for constructor-less services, or services that do
@@ -22,9 +22,11 @@ return [
             // Fully\Qualified\InterfaceName::class => Fully\Qualified\ClassName::class,
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
-        'factories' => [
+        'factories'  => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
-            LoggerInterface::class => LoggerFactory::class,
+            LoggerInterface::class               => LoggerFactory::class,
+            App\Handler\GetTodoHandler::class    => App\Handler\GetHandlerFactory::class,
+            App\Handler\CreateTodoHandler::class => App\Handler\CreateHandlerFactory::class,
         ],
     ],
 ];
