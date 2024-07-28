@@ -6,6 +6,7 @@ use App\Model\Todo;
 use App\Model\TodoUser;
 use Laminas\Db\Adapter\AdapterInterface;
 use Laminas\Db\Sql\Sql;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Mezzio\Authentication\UserInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -67,6 +68,6 @@ class CreateTodoHandler implements RequestHandlerInterface
         // if there is a way to return last item or last item id?
         $this->logger->info('Created new todo item', ['id' => $id]);
 
-        return new JsonResponse($todo, 201);
+        return new EmptyResponse(201);
     }
 }

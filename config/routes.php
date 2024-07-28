@@ -7,6 +7,7 @@ use App\Handler\DeleteTodoHandler;
 use App\Handler\GetTodoHandler;
 use App\Handler\HomePageHandler;
 use App\Handler\PingHandler;
+use App\Handler\PutTodoHandler;
 use Mezzio\Application;
 use Mezzio\Helper\BodyParams\BodyParamsMiddleware;
 use Mezzio\MiddlewareFactory;
@@ -56,7 +57,10 @@ return static function (
         [BodyParamsMiddleware::class, CreateTodoHandler::class],
         'todos.post'
     );
-    $app->delete('/api/v1/todos/{todoId}', DeleteTodoHandler::class,
-        'todos.delete');
+    $app->delete(
+        '/api/v1/todos/{todoId}',
+        DeleteTodoHandler::class,
+        'todos.delete'
+    );
     $app->put('/api/v1/todos/{todoId}', PutTodoHandler::class, 'todos.put');
 };

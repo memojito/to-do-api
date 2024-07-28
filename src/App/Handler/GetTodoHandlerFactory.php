@@ -8,7 +8,7 @@ use Laminas\Db\Adapter\AdapterInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
-class GetHandlerFactory
+class GetTodoHandlerFactory
 {
     public function __invoke(ContainerInterface $container): GetTodoHandler
     {

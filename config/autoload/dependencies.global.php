@@ -3,6 +3,14 @@
 declare(strict_types=1);
 
 use App\Factory\LoggerFactory;
+use App\Handler\CreateHandlerFactory;
+use App\Handler\CreateTodoHandler;
+use App\Handler\DeleteTodoHandler;
+use App\Handler\DeleteTodoHandlerFactory;
+use App\Handler\GetTodoHandler;
+use App\Handler\GetTodoHandlerFactory;
+use App\Handler\PutTodoHandler;
+use App\Handler\PutTodoHandlerFactory;
 use Psr\Log\LoggerInterface;
 
 return [
@@ -24,9 +32,11 @@ return [
         // Use 'factories' for services provided by callbacks/factory classes.
         'factories'  => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
-            LoggerInterface::class               => LoggerFactory::class,
-            App\Handler\GetTodoHandler::class    => App\Handler\GetHandlerFactory::class,
-            App\Handler\CreateTodoHandler::class => App\Handler\CreateHandlerFactory::class,
+            LoggerInterface::class   => LoggerFactory::class,
+            GetTodoHandler::class    => GetTodoHandlerFactory::class,
+            CreateTodoHandler::class => CreateHandlerFactory::class,
+            DeleteTodoHandler::class => DeleteTodoHandlerFactory::class,
+            PutTodoHandler::class    => PutTodoHandlerFactory::class,
         ],
     ],
 ];

@@ -4,6 +4,8 @@ namespace App\Handler;
 
 use App\Model\TodoUser;
 use Laminas\Db\Adapter\AdapterInterface;
+use Laminas\Db\Sql\Sql;
+use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Mezzio\Authentication\UserInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -43,5 +45,32 @@ class PutTodoHandler implements RequestHandlerInterface
             'Updating a todo for user: ',
             ['user_id' => $userId]
         );
+
+        $todoId = (int)$request->getAttribute('todoId');
+
+        $sql    = new Sql($this->dbAdapter);
+        $select = $sql->select();
+        $select->from('todos')
+               ->where(['id' => $todoId, 'user_id' => $userId]);
+
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $resultSet = $statement->execute()->current();
+
+        if ( ! $resultSet) {
+            return new JsonResponse(
+                ['error' => 'Todo not found or not owned by user'],
+                404
+            );
+        }
+
+        $update = $sql->update();
+        $update->table('todos')
+               ->set(['state' => 'COMPLETED'])
+               ->where(['id' => $todoId]);
+
+        $statement = $sql->prepareStatementForSqlObject($update);
+        $statement->execute();
+
+        return new EmptyResponse(204);
     }
 }
